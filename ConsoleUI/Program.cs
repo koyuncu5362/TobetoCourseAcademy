@@ -55,7 +55,45 @@ namespace ConsoleUI
             //Kurs Ve Eğitmen İlişkileri
             List<Course> courses = new List<Course>() { course1, course2, course3 };
             CourseManager courseManager = new CourseManager(new EfCourseDal());
-            courseManager.Delete(course3);
+            var x = courseManager.Add(course1);
+            Console.WriteLine(x.Message);
+            Console.WriteLine("----------------------");
+            var value2 = courseManager.GetAllByUnitPrice(0, 100);
+            foreach (var item in value2.Data)
+            {
+                //Console.WriteLine(item.Name + item.Price);
+            }
+            Console.WriteLine("--------------------");
+            var result = courseManager.GetDetails();
+            if (result.Success)
+            {
+                foreach (var item in result.Data)
+                {
+                    Console.WriteLine(item.CourseName);
+                    Console.WriteLine(item.CourseImage);
+                    Console.WriteLine(item.CoursePrice);
+                    Console.WriteLine(item.CategoryName);
+                    Console.WriteLine(item.CourseDescription);
+                    Console.WriteLine(item.InstructorName);
+                    Console.WriteLine(result.Message);
+                    Console.WriteLine("--------------------------");
+
+                    //Console.WriteLine(item.Name);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+          
+            //foreach (var item in courseManager.GetDetails().Message)
+            //{
+            //    Console.WriteLine(item);
+
+            //    Console.WriteLine("--------------------------");
+
+            //    //Console.WriteLine(item.Name);
+            //}
             foreach (var course in courses)
             {
                 //courseManager.Add(course);

@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstracts;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstracts;
 using Entities.Concretes;
+using Entities.Dto;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,52 +12,31 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concretes.EntityFramework
 {
-    public class EfCourseDal : ICourseDal
+    public class EfCourseDal :EfEntityRepositoryBase<Course,KodlamaIoContext>,ICourseDal
     {
-        public void Add(Course entity)
+      
+
+        public List<CourseDetail> GetDetails()
         {
             using (KodlamaIoContext context = new KodlamaIoContext())
             {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
+                var result = from courses in context.Course
+                             join categories in context.Category
+                             on courses.CategoryId equals categories.Id
+                             select new CourseDetail
+                             {
+                                 CategoryName = categories.Name,
+                                 CourseDescription = courses.Description,
+                                 CourseImage = courses.ImageUrl,
+                                 CoursePrice = courses.Price,
+                                 CourseName = courses.Name,
+                                 InstructorName = "ss"
+                             };
+                return result.ToList();
+
             }
         }
 
-        public void Delete(Course entity)
-        {
-            using (KodlamaIoContext context = new KodlamaIoContext())
-            {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-            }
-        }
-
-        public Course Get(Expression<Func<Course, bool>> filter)
-        {
-            using (KodlamaIoContext context = new KodlamaIoContext())
-            {
-                return context.Set<Course>().SingleOrDefault(filter);
-            }
-        }
-
-        public List<Course> GetAll(Expression<Func<Course, bool>> filter = null)
-        {
-            using (KodlamaIoContext context = new KodlamaIoContext())
-            {
-                return filter == null ? context.Set<Course>().ToList() : context.Set<Course>().Where(filter).ToList();
-            }
-        }
-
-        public void Update(Course entity)
-        {
-            using (KodlamaIoContext context = new KodlamaIoContext())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
-            }
-        }
+      
     }
 }
