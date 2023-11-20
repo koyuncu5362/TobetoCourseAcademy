@@ -16,7 +16,7 @@ namespace DataAccess.Concretes.EntityFramework
         }
 
         public DbSet<Category> Category { get; set; }
-        public DbSet<CourseInstructor> CourseIntructor { get; set; }
+        public DbSet<CourseInstructor> CourseInstructor { get; set; }
         public DbSet<Instructor> Instructor { get; set; }
         public DbSet<Course> Course { get; set; }
 

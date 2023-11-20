@@ -16,7 +16,7 @@ namespace Entities.Concretes
         public double Price { get; set; }
         public string ImageUrl { get; set; }
         public Category? Category { get; set; }
-        public CourseInstructor[]? GetCourseInstructor { get; set; }
+        public List<CourseInstructor>? CourseInstructor { get; set; }
 
     }
 }

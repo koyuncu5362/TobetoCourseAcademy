@@ -29,8 +29,7 @@ namespace ConsoleUI
             };
             Course course3 = new Course
             {
-                Id = 3,
-                CategoryId = 2,
+                         CategoryId = 2,
                 Description = "test",
                 ImageUrl = "test",
                 Name = "JavaScript",
@@ -56,6 +55,7 @@ namespace ConsoleUI
             List<Course> courses = new List<Course>() { course1, course2, course3 };
             CourseManager courseManager = new CourseManager(new EfCourseDal());
             var x = courseManager.Add(course1);
+            Console.WriteLine(x);
             Console.WriteLine(x.Message);
             Console.WriteLine("----------------------");
             var value2 = courseManager.GetAllByUnitPrice(0, 100);
@@ -63,28 +63,28 @@ namespace ConsoleUI
             {
                 //Console.WriteLine(item.Name + item.Price);
             }
-            Console.WriteLine("--------------------");
-            var result = courseManager.GetDetails();
-            if (result.Success)
-            {
-                foreach (var item in result.Data)
-                {
-                    Console.WriteLine(item.CourseName);
-                    Console.WriteLine(item.CourseImage);
-                    Console.WriteLine(item.CoursePrice);
-                    Console.WriteLine(item.CategoryName);
-                    Console.WriteLine(item.CourseDescription);
-                    Console.WriteLine(item.InstructorName);
-                    Console.WriteLine(result.Message);
-                    Console.WriteLine("--------------------------");
+            //Console.WriteLine("--------------------");
+            //var result = courseManager.GetDetails();
+            //if (result.Success)
+            //{
+            //    foreach (var item in result.Data)
+            //    {
+            //        Console.WriteLine(item.CourseName);
+            //        Console.WriteLine(item.CourseImage);
+            //        Console.WriteLine(item.CoursePrice);
+            //        Console.WriteLine(item.CategoryName);
+            //        Console.WriteLine(item.CourseDescription);
+            //        Console.WriteLine(item.InstructorName);
+            //        Console.WriteLine(result.Message);
+            //        Console.WriteLine("--------------------------");
 
-                    //Console.WriteLine(item.Name);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+            //        //Console.WriteLine(item.Name);
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine(result.Message);
+            //}
           
             //foreach (var item in courseManager.GetDetails().Message)
             //{
@@ -94,10 +94,10 @@ namespace ConsoleUI
 
             //    //Console.WriteLine(item.Name);
             //}
-            foreach (var course in courses)
-            {
-                //courseManager.Add(course);
-            }
+            //foreach (var course in courses)
+            //{
+            //    courseManager.Add(course);
+            //}
 
             List<Category> categories = new List<Category>() { category1,category2 };
             CategoryManager courseManager1 = new CategoryManager(new EfCategoryDal());
