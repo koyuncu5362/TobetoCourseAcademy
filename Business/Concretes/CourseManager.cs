@@ -2,20 +2,13 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
-using DataAccess.Concretes.EntityFramework;
+
 using Entities.Concretes;
 using Entities.Dto;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Business.Concretes
 {
@@ -30,7 +23,7 @@ namespace Business.Concretes
         [ValidationAspect(typeof(CourseValidator))]
         public IResult Add(Course course)
         {
-           
+            var result = BusinessRules.Run(CheckIfCourseCountOfCategoryCorrect(course.CategoryId));
             _courseDal.Add(course);
             return new SuccessResult(Messages.CategoryAdded);
         }
@@ -73,6 +66,17 @@ namespace Business.Concretes
         public IDataResult<List<Course>> GetAllByCategoryId(int categoryId)
         {
             return new SuccessDataResult<List<Course>>(_courseDal.GetAll(p => p.CategoryId==categoryId));
+        }
+
+
+        private IResult CheckIfCourseCountOfCategoryCorrect(int categoryId)
+        {
+            var result = _courseDal.GetAll(p => p.CategoryId == categoryId).Count;
+            if (result >= 15)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
         }
     }
  

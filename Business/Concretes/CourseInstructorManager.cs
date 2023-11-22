@@ -18,7 +18,7 @@ namespace Business.Concretes
         public IResult Add(CourseInstructor courseInstructor)
         {
             _courseInstructorDal.Add(courseInstructor);
-            return new SuccessResult(Messages.CategoryAdded);
+            return new SuccessResult();
         }
 
         public IResult Delete(CourseInstructor courseInstructor)
